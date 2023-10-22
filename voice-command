@@ -1,0 +1,41 @@
+pip install pyautogui
+pip install SpeechRecognition
+
+import speech_recognition as sr
+import pyautogui
+
+recognizer = sr.Recognizer()
+
+with sr.Microphone() as source:
+    print("Səsli əmr gözlənilir...")
+    audio = recognizer.listen(source)
+
+try:
+    
+    command = recognizer.recognize_google(audio, language="az").lower()
+
+    if "kilitlə" in command:
+        
+        pyautogui.hotkey("win", "l")
+    elif "səsi artır" in command:
+        
+        pyautogui.press("volumeup")
+    elif "səsi azalt" in command:
+       
+        pyautogui.press("volumemute")
+    elif "parlaqlığı azalt" in command:
+        
+        pyautogui.hotkey("f11")
+    elif "parlaqlığı artır" in command:
+        
+        pyautogui.hotkey("f12")
+    elif "yeni pəncərə" in command:
+        
+        pyautogui.hotkey("ctrl", "t")
+    else:
+        print("Anlaşılmayan əmr:", command)
+
+except sr.UnknownValueError:
+    print("Səs başa düşülmədi.")
+except sr.RequestError:
+    print("Serverdən cavab almaq mümkün deyil.")
